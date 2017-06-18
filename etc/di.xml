@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Space48\MasterMind\Model\MasterMindInterface" type="Space48\MasterMind\Model\MasterMind"/>
+    <preference for="Space48\MasterMind\Model\GuessEvaluatorInterface" type="Space48\MasterMind\Model\GuessEvaluator"/>
+    <type name="Space48\MasterMind\Config\Colors">
+        <arguments>
+            <argument name="colors" xsi:type="array">
+                <item name="10" xsi:type="string">red</item>
+                <item name="20" xsi:type="string">green</item>
+                <item name="30" xsi:type="string">blue</item>
+                <item name="40" xsi:type="string">yellow</item>
+                <item name="50" xsi:type="string">orange</item>
+                <item name="60" xsi:type="string">violet</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

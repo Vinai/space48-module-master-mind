@@ -1,0 +1,20 @@
+
+#mastermind .color {
+    display: inline;
+    float: left;
+    width: 5em;
+    height: 5em;
+    list-style-type: none;
+}
+
+#mastermind .guesses, #mastermind .color-guess {
+    clear: both;
+}
+
+#mastermind .guesses .color-guess {
+    padding: 5px 0 0 40px;
+}
+
+#mastermind .guesses .color-guess-label {
+    padding-left: 10px;
+}

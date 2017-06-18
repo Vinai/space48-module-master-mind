@@ -1,0 +1,38 @@
+<?php /** @var \Space48\MasterMind\Block\MasterMindBlock $block */ ?>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Magento_Ui/js/core/app": {
+            "components": {
+                "space48_mastermind": {
+                    "component": "Space48_MasterMind/js/mastermind",
+                    "base_url": "<?= $block->escapeJsQuote($block->getBaseUrl()) ?>",
+                    "colors": <?= $block->getColorsJson() ?>
+                }
+            }
+        }
+    }
+}
+</script>
+<div id="mastermind" data-bind="scope: 'space48_mastermind'">
+    <div><h3 class="step-instruction" data-bind="text: instruction"></h3></div>
+    <div>
+        <ul class="color-chooser" data-bind="foreach: colors">
+            <li class="color" data-bind="
+                style: { backgroundColor: $data },
+                click: $parent.guess
+            "></li>
+        </ul>
+    </div>
+    <div class="guesses">
+        <div><h3><?= __('Your guess:') ?></h3></div>
+        <div class="color-guess">
+            <div class="color guess1" data-bind="style: { backgroundColor: guess1 }">&nbsp;</div>
+            <span class="color-guess-label"><?= __('First Color')?></span>
+        </div>
+        <div class="color-guess">
+            <div class="color guess2" data-bind="style: { backgroundColor: guess2 }">&nbsp;</div>
+            <span class="color-guess-label"><?= __('Second Color')?></span>
+        </div>
+    </div>
+</div>
