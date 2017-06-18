@@ -68,7 +68,7 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
      * @param string $evaluatorResult
      * @dataProvider evaluatorResultDataProvider
      */
-    public function testReturnsMapValueForPerfectGuess(string $evaluatorResult)
+    public function testReturnsMapValueForGuessEvaluationResult(string $evaluatorResult)
     {
         $this->mockColors->method('pick')->willReturn([]);
         $this->mockEvaluator->method('evaluate')->willReturn($evaluatorResult);
