@@ -40,7 +40,6 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
         $this->mockEvaluator = $this->getMock(GuessEvaluatorInterface::class);
         $this->mockColorStorage = $this->getMockBuilder(ColorStorage::class)->disableOriginalConstructor()->getMock();
         $this->mockColors = $this->getMockBuilder(Colors::class)->disableOriginalConstructor()->getMock();
-        $this->mockColors->method('asArray')->willReturn(['bar', 'baz', 'qux']);
     }
 
     public function testImplementsTheMasterMindInterface()
