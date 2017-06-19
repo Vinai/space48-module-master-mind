@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Space48\MasterMind\Model;
 
-interface GuessEvaluatorInterface
+interface GuessCheckerInterface
 {
     const PERFECT = 'Perfect';
     const ONE_CORRECT_POSITION = 'OneColorAtCorrectPosition';
@@ -23,5 +23,5 @@ interface GuessEvaluatorInterface
      * @param string[] $guessColors
      * @return string
      */
-    public function evaluate(array $targetColors, array $guessColors);
+    public function check(array $targetColors, array $guessColors);
 }

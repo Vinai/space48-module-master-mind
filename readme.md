@@ -9,15 +9,15 @@ Visit the module page at http://example.com/mastermind
 The repository has 4 tags:
 
 * `0-complete`: The fully functional module. Same as the HEAD of the master branch. Use this as a reference.
-* `1-no-guess-evaluator`: The complete module missing only the `GuessEvaluatorInterface` implementation.
-* `2-no-mastermind`: The complete module missing the `GuessEvaluatorInterface` and the `MasterMindInterface` implementations.
-* `3-no-evaluate-action`: The complete module missing the `GuessEvaluatorInterface`, the `MasterMindInterface` and the `\Space48\MasterMind\Controller\Evaluate\Index` implementations.
+* `1-no-guess-checker`: The complete module missing only the `GuessCheckerInterface` implementation.
+* `2-no-mastermind`: The complete module missing the `GuessCheckerInterface` and the `MasterMindInterface` implementations.
+* `3-no-evaluate-action`: The complete module missing the `GuessCheckerInterface`, the `MasterMindInterface` and the `\Space48\MasterMind\Controller\Evaluate\Index` implementations.
 
 Depending on the available time, three classes can be implemented:
 
-## `\Space48\MasterMind\Model\GuessEvaluatorInterface`  
+## `\Space48\MasterMind\Model\GuessCheckerInterface`  
 
-`GuessEvaluatorInterface::evaluate(string[] $targetColors, string[] $guessColors): string`
+`GuessCheckerInterface::check(string[] $targetColors, string[] $guessColors): string`
 
 Compares the guess colors with the target colors and returns the value of one of the constants:
 
@@ -30,15 +30,32 @@ The purpose of this class is to practice testing a pure function without collabo
 
 ## `\Space48\MasterMind\Model\MasterMindInterface`
 
-`MasterMindInterface::playerGuesses(string[] $colors): string`
+`MasterMindInterface::playerGuesses(string[] $colors): mixed[]`
 
-Receives an array of color strings.  
-Responsible for picking the target colors if there none are set.  
-Evaluates the guess and returns the string in the result message map for the evaluation result.  
-If the evaluation result is `Perfect` reset the target colors before returning the result string so state is ready for a new game.
+Receives an array of color strings.
 
-The implementation can use `\Space48\MasterMind\Session\ColorStorage` to keep track of the current target colors, and `\Space48\MasterMind\Config\Colors` to retrieve the list of available colors and to pick a set of target colors.
+If no target colors are set, pick the target colors.  
+Check the guess and return an array with the string in the result message
+map for the check result and the guess count for the current game.  
+The return array keys are the values of the `self::KEY_CHECK_RESULT` and `self::KEY_GUESS_COUNT` constants.
+If the check result is "Perfect", reset the game state before returning.  
+Each call to playerGuesses() increments the guess count for the current game.  
 
+Example return array structure:
+
+```php
+[
+    'check_result' => 'No match!',
+    'guess_count'  => 5
+]
+```
+
+The following classes should be used as collaborators:
+
+- `\Space48\MasterMind\Model\GameStateInterface` (target colors, guess count, reset game state)
+- `\Space48\MasterMind\Model\GuessCheckerInterface` (compare guess to target colors)
+- `\Space48\MasterMind\Config\Colors` (pick new target colors)
+     
 The purpose of this class is to practice testing methods using mock collaborators.
 
 ## `\Space48\MasterMind\Controller\Evaluate\Index`

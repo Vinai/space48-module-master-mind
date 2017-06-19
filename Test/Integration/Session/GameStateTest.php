@@ -6,6 +6,7 @@ namespace Space48\MasterMind\Test\Integration\Session;
 
 use Magento\Framework\Session\SessionManager;
 use Magento\TestFramework\ObjectManager;
+use Space48\MasterMind\Model\GameStateInterface;
 use Space48\MasterMind\Session\GameState;
 
 /**
@@ -14,9 +15,9 @@ use Space48\MasterMind\Session\GameState;
  */
 class GameStateTest extends \PHPUnit_Framework_TestCase
 {
-    private function createGameState(): GameState
+    private function createGameState(): GameStateInterface
     {
-        return ObjectManager::getInstance()->create(GameState::class);
+        return ObjectManager::getInstance()->create(GameStateInterface::class);
     }
 
     public function testExtendsSessionManagement()

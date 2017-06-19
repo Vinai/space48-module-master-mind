@@ -5,46 +5,49 @@ declare(strict_types=1);
 namespace Space48\MasterMind\Model;
 
 use Space48\MasterMind\Config\Colors;
-use Space48\MasterMind\Session\GameState;
 
 class MasterMind implements MasterMindInterface
 {
     private $numberOfColorsToPick = 2;
 
     /**
-     * @var GuessEvaluatorInterface
+     * @var GuessCheckerInterface
      */
-    private $guessEvaluator;
+    private $guessChecker;
 
     /**
-     * @var GameState
+     * @var GameStateInterface
      */
-    private $colorStorage;
+    private $gameState;
 
     /**
      * @var Colors
      */
     private $colors;
 
-    public function __construct(GuessEvaluatorInterface $guessEvaluator, GameState $colorStorage, Colors $colors)
+    public function __construct(GuessCheckerInterface $guessChecker, GameStateInterface $gameState, Colors $colors)
     {
-        $this->guessEvaluator = $guessEvaluator;
-        $this->colorStorage = $colorStorage;
+        $this->guessChecker = $guessChecker;
+        $this->gameState = $gameState;
         $this->colors = $colors;
     }
 
     /**
      * @param string[] $colors
-     * @return string
+     * @return mixed[]
      */
     public function playerGuesses(array $colors)
     {
-        $result = $this->guessEvaluator->evaluate($this->getTargetColors(), $colors);
-        if (GuessEvaluatorInterface::PERFECT === $result) {
-            $this->pickNewTargetColors();
-        }
+        $this->gameState->incrementGuessCount();
+        $checkResult = $this->guessChecker->check($this->getTargetColors(), $colors);
+        
+        $result = $this->buildResultArray($checkResult);
 
-        return self::RESULT_MESSAGE_MAP[$result];
+        if (GuessCheckerInterface::PERFECT === $checkResult) {
+            $this->gameState->reset();
+        }
+        
+        return $result;
     }
 
     /**
@@ -52,16 +55,24 @@ class MasterMind implements MasterMindInterface
      */
     private function getTargetColors()
     {
-        if (! $this->colorStorage->getTargetColors()) {
+        if (empty($this->gameState->getTargetColors())) {
             $this->pickNewTargetColors();
         }
 
-        return $this->colorStorage->getTargetColors();
+        return $this->gameState->getTargetColors();
     }
 
     private function pickNewTargetColors()
     {
         $targetColors = $this->colors->pick($this->numberOfColorsToPick);
-        $this->colorStorage->setTargetColors($targetColors);
+        $this->gameState->setTargetColors($targetColors);
+    }
+
+    private function buildResultArray($checkResult): array
+    {
+        return [
+            self::KEY_CHECK_RESULT => self::RESULT_MESSAGE_MAP[$checkResult],
+            self::KEY_GUESS_COUNT  => $this->gameState->getGuessCount(),
+        ];
     }
 }

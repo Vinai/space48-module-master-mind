@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Space48\MasterMind\Session;
 
 use Magento\Framework\Session\SessionManager;
+use Space48\MasterMind\Model\GameStateInterface;
 
-class GameState extends SessionManager
+class GameState extends SessionManager implements GameStateInterface
 {
     /**
      * @param string[] $colors

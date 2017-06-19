@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Space48\MasterMind\Model\GameStateInterface" type="Space48\MasterMind\Session\GameState"/>
     <preference for="Space48\MasterMind\Model\MasterMindInterface" type="Space48\MasterMind\Model\MasterMind"/>
-    <preference for="Space48\MasterMind\Model\GuessEvaluatorInterface" type="Space48\MasterMind\Model\GuessEvaluator"/>
+    <preference for="Space48\MasterMind\Model\GuessCheckerInterface" type="Space48\MasterMind\Model\TwoColorGuessChecker"/>
     <type name="Space48\MasterMind\Config\Colors">
         <arguments>
             <argument name="colors" xsi:type="array">

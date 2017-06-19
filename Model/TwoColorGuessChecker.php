@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Space48\MasterMind\Model;
 
-class GuessEvaluator implements GuessEvaluatorInterface
+class TwoColorGuessChecker implements GuessCheckerInterface
 {
     /**
      * @param string[] $targetColors
      * @param string[] $guessColors
      * @return string
      */
-    public function evaluate(array $targetColors, array $guessColors)
+    public function check(array $targetColors, array $guessColors)
     {
         if ($targetColors[0] == $guessColors[0] && $targetColors[1] == $guessColors[1]) {
             return self::PERFECT;

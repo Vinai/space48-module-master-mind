@@ -42,8 +42,19 @@ class Index implements ActionInterface
     {
         $jsonResult = $this->jsonResultFactory->create();
         $colors = $this->request->getParam('guess', $this->defaultGuess);
-        $jsonResult->setData($this->masterMind->playerGuesses($colors));
+        $responseMessage = $this->buildResponseMessage($colors);
+        $jsonResult->setData($responseMessage);
 
         return $jsonResult;
+    }
+
+    private function buildResponseMessage($colors): string
+    {
+        $checkResult = $this->masterMind->playerGuesses($colors);
+        
+        $message = $checkResult[MasterMindInterface::KEY_CHECK_RESULT];
+        $guesses = '(#' . $checkResult[MasterMindInterface::KEY_GUESS_COUNT] . ')';
+        
+        return $message . ' ' . $guesses;
     }
 }
