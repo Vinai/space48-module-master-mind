@@ -1,6 +1,6 @@
 {
-  "name": "space48/module-master-mind",
-  "description": "Educational example module to illustrate decoupling of module code from M2 entry points.",
+  "name": "space48/module-mastermind",
+  "description": "Educational example module to practice writing tests in the context of a Magento 2 module.",
   "require": {
     "php": "^7.0.0",
     "magento/framework": "^100.1.2"

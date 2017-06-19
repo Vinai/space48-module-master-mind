@@ -6,7 +6,7 @@ namespace Space48\MasterMind\Model;
 
 use Space48\MasterMind\Config\Colors;
 
-class MasterMind implements MasterMindInterface
+class MasterMindGame implements MasterMindGameInterface
 {
     private $numberOfColorsToPick = 2;
 

@@ -7,7 +7,7 @@ namespace Space48\MasterMind\Controller\Evaluate;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\JsonFactory as JsonResultFactory;
-use Space48\MasterMind\Model\MasterMindInterface;
+use Space48\MasterMind\Model\MasterMindGameInterface;
 
 class Index implements ActionInterface
 {
@@ -19,9 +19,9 @@ class Index implements ActionInterface
     private $jsonResultFactory;
 
     /**
-     * @var MasterMindInterface
+     * @var MasterMindGameInterface
      */
-    private $masterMind;
+    private $game;
 
     /**
      * @var RequestInterface
@@ -31,11 +31,11 @@ class Index implements ActionInterface
     public function __construct(
         JsonResultFactory $jsonResultFactory,
         RequestInterface $request,
-        MasterMindInterface $masterMind
+        MasterMindGameInterface $game
     ) {
         $this->jsonResultFactory = $jsonResultFactory;
         $this->request = $request;
-        $this->masterMind = $masterMind;
+        $this->game = $game;
     }
 
     public function execute()
@@ -50,10 +50,10 @@ class Index implements ActionInterface
 
     private function buildResponseMessage($colors): string
     {
-        $checkResult = $this->masterMind->playerGuesses($colors);
+        $guessResult = $this->game->playerGuesses($colors);
         
-        $message = $checkResult[MasterMindInterface::KEY_CHECK_RESULT];
-        $guesses = '(#' . $checkResult[MasterMindInterface::KEY_GUESS_COUNT] . ')';
+        $message = $guessResult[MasterMindGameInterface::KEY_CHECK_RESULT];
+        $guesses = '(#' . $guessResult[MasterMindGameInterface::KEY_GUESS_COUNT] . ')';
         
         return $message . ' ' . $guesses;
     }

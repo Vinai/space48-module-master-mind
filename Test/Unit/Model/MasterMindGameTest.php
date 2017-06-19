@@ -7,13 +7,13 @@ namespace Space48\MasterMind\Test\Unit\Model;
 use Space48\MasterMind\Config\Colors;
 use Space48\MasterMind\Model\GameStateInterface;
 use Space48\MasterMind\Model\GuessCheckerInterface;
-use Space48\MasterMind\Model\MasterMind;
-use Space48\MasterMind\Model\MasterMindInterface;
+use Space48\MasterMind\Model\MasterMindGame;
+use Space48\MasterMind\Model\MasterMindGameInterface;
 
 /**
- * @covers \Space48\MasterMind\Model\MasterMind
+ * @covers \Space48\MasterMind\Model\MasterMindGame
  */
-class MasterMindTest extends \PHPUnit_Framework_TestCase
+class MasterMindGameTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var GuessCheckerInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -30,9 +30,9 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
      */
     private $mockColors;
 
-    private function createMasterMindInstance(): MasterMind
+    private function createGameInstance(): MasterMindGame
     {
-        return new MasterMind($this->mockChecker, $this->mockGameState, $this->mockColors);
+        return new MasterMindGame($this->mockChecker, $this->mockGameState, $this->mockColors);
     }
 
     protected function setUp()
@@ -42,9 +42,9 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
         $this->mockColors = $this->getMockBuilder(Colors::class)->disableOriginalConstructor()->getMock();
     }
 
-    public function testImplementsTheMasterMindInterface()
+    public function testImplementsTheMasterMindGameInterface()
     {
-        $this->assertInstanceOf(MasterMindInterface::class, $this->createMasterMindInstance());
+        $this->assertInstanceOf(MasterMindGameInterface::class, $this->createGameInstance());
     }
 
     public function testPicksTargetColorsIfNoneAreSet()
@@ -53,7 +53,7 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
         $this->mockColors->method('pick')->willReturn([]);
         $this->mockGameState->expects($this->once())->method('setTargetColors');
         $this->mockChecker->method('check')->willReturn(GuessCheckerInterface::NO_MATCH);
-        $this->createMasterMindInstance()->playerGuesses([]);
+        $this->createGameInstance()->playerGuesses([]);
     }
 
     public function testPicksNoTargetColorsIfTheyAlreadyAreSet()
@@ -61,7 +61,7 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
         $this->mockGameState->method('getTargetColors')->willReturn(['foo', 'bar']);
         $this->mockGameState->expects($this->never())->method('setTargetColors');
         $this->mockChecker->method('check')->willReturn(GuessCheckerInterface::NO_MATCH);
-        $this->createMasterMindInstance()->playerGuesses([]);
+        $this->createGameInstance()->playerGuesses([]);
     }
 
     /**
@@ -74,10 +74,10 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
         $this->mockChecker->method('check')->willReturn($checkerResult);
         $this->mockGameState->method('getTargetColors')->willReturn(['frob', 'zab']);
         
-        $expected = MasterMindInterface::RESULT_MESSAGE_MAP[$checkerResult];
+        $expected = MasterMindGameInterface::RESULT_MESSAGE_MAP[$checkerResult];
         
-        $result = $this->createMasterMindInstance()->playerGuesses(['foo', 'bar']);
-        $this->assertSame($expected, $result[MasterMindInterface::KEY_CHECK_RESULT]);
+        $result = $this->createGameInstance()->playerGuesses(['foo', 'bar']);
+        $this->assertSame($expected, $result[MasterMindGameInterface::KEY_CHECK_RESULT]);
     }
 
     public function checkerResultDataProvider()
@@ -97,8 +97,8 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
         $this->mockGameState->method('getTargetColors')->willReturn(['frob', 'zab']);
         $this->mockGameState->method('getGuessCount')->willReturn($testGuessCount);
         
-        $result = $this->createMasterMindInstance()->playerGuesses(['foo', 'bar']);
-        $this->assertSame($testGuessCount, $result[MasterMindInterface::KEY_GUESS_COUNT]);
+        $result = $this->createGameInstance()->playerGuesses(['foo', 'bar']);
+        $this->assertSame($testGuessCount, $result[MasterMindGameInterface::KEY_GUESS_COUNT]);
     }
 
     public function testIncrementsGuessCount()
@@ -106,7 +106,7 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
         $this->mockGameState->method('getTargetColors')->willReturn(['foo', 'bar']);
         $this->mockChecker->method('check')->willReturn(GuessCheckerInterface::NO_MATCH);
         $this->mockGameState->expects($this->once())->method('incrementGuessCount');
-        $this->createMasterMindInstance()->playerGuesses([]);
+        $this->createGameInstance()->playerGuesses([]);
     }
 
     public function testResetsGameIfGuessIsSuccessful()
@@ -114,7 +114,7 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
         $this->mockGameState->method('getTargetColors')->willReturn(['foo', 'bar']);
         $this->mockGameState->expects($this->once())->method('reset');
         $this->mockChecker->method('check')->willReturn(GuessCheckerInterface::PERFECT);
-        $this->createMasterMindInstance()->playerGuesses([]);
+        $this->createGameInstance()->playerGuesses([]);
     }
 
     public function testDelegatesPickingNewColorsToColorsInstance()
@@ -122,6 +122,6 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
         $this->mockGameState->method('getTargetColors')->willReturn([]);
         $this->mockColors->expects($this->once())->method('pick')->willReturn(['foo', 'bar']);
         $this->mockChecker->method('check')->willReturn(GuessCheckerInterface::NO_MATCH);
-        $this->createMasterMindInstance()->playerGuesses([]);
+        $this->createGameInstance()->playerGuesses([]);
     }
 }
