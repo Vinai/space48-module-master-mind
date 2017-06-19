@@ -8,7 +8,7 @@ use Space48\MasterMind\Config\Colors;
 use Space48\MasterMind\Model\GuessEvaluatorInterface;
 use Space48\MasterMind\Model\MasterMind;
 use Space48\MasterMind\Model\MasterMindInterface;
-use Space48\MasterMind\Session\ColorStorage;
+use Space48\MasterMind\Session\GameState;
 
 /**
  * @covers \Space48\MasterMind\Model\MasterMind
@@ -21,7 +21,7 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
     private $mockEvaluator;
 
     /**
-     * @var ColorStorage|\PHPUnit_Framework_MockObject_MockObject
+     * @var GameState|\PHPUnit_Framework_MockObject_MockObject
      */
     private $mockColorStorage;
 
@@ -38,7 +38,7 @@ class MasterMindTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->mockEvaluator = $this->getMock(GuessEvaluatorInterface::class);
-        $this->mockColorStorage = $this->getMockBuilder(ColorStorage::class)->disableOriginalConstructor()->getMock();
+        $this->mockColorStorage = $this->getMockBuilder(GameState::class)->disableOriginalConstructor()->getMock();
         $this->mockColors = $this->getMockBuilder(Colors::class)->disableOriginalConstructor()->getMock();
     }
 

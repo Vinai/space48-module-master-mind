@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Space48\MasterMind\Model;
 
 use Space48\MasterMind\Config\Colors;
-use Space48\MasterMind\Session\ColorStorage;
+use Space48\MasterMind\Session\GameState;
 
 class MasterMind implements MasterMindInterface
 {
@@ -17,7 +17,7 @@ class MasterMind implements MasterMindInterface
     private $guessEvaluator;
 
     /**
-     * @var ColorStorage
+     * @var GameState
      */
     private $colorStorage;
 
@@ -26,7 +26,7 @@ class MasterMind implements MasterMindInterface
      */
     private $colors;
 
-    public function __construct(GuessEvaluatorInterface $guessEvaluator, ColorStorage $colorStorage, Colors $colors)
+    public function __construct(GuessEvaluatorInterface $guessEvaluator, GameState $colorStorage, Colors $colors)
     {
         $this->guessEvaluator = $guessEvaluator;
         $this->colorStorage = $colorStorage;
@@ -52,16 +52,16 @@ class MasterMind implements MasterMindInterface
      */
     private function getTargetColors()
     {
-        if (! $this->colorStorage->getColors()) {
+        if (! $this->colorStorage->getTargetColors()) {
             $this->pickNewTargetColors();
         }
 
-        return $this->colorStorage->getColors();
+        return $this->colorStorage->getTargetColors();
     }
 
     private function pickNewTargetColors()
     {
         $targetColors = $this->colors->pick($this->numberOfColorsToPick);
-        $this->colorStorage->setColors($targetColors);
+        $this->colorStorage->setTargetColors($targetColors);
     }
 }
