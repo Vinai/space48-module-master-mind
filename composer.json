@@ -3,7 +3,7 @@
   "description": "Educational example module to illustrate decoupling of module code from M2 entry points.",
   "require": {
     "php": "^7.0.0",
-    "magento/framework": "^100.1.4"
+    "magento/framework": "^100.1.2"
   },
   "type": "magento2-module",
   "license": [
