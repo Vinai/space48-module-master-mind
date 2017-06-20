@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Space48\MasterMind\Test\Unit\Config;
-
-use Space48\MasterMind\Config\Colors;
+namespace Space48\MasterMind\Config;
 
 /**
  * @covers \Space48\MasterMind\Config\Colors
@@ -52,5 +50,16 @@ class ColorsTest extends \PHPUnit_Framework_TestCase
     public function numberOfColorsToPickDataProvider()
     {
         return [[0], [1], [2], [3], [4]];
+    }
+
+    public function testReturnsTheInjectedColors()
+    {
+        $testColors = [
+            'a' => 'red',
+            'b' => 'blue',
+            'c' => 'green',
+        ];
+        $colors = new Colors($testColors);
+        $this->assertSame(array_values($testColors), $colors->asArray());
     }
 }

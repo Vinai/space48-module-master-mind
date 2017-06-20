@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Space48\MasterMind\Test\Integration\Session;
+namespace Space48\MasterMind\Model\State;
 
 use Magento\Framework\Session\SessionManager;
 use Magento\TestFramework\ObjectManager;
 use Space48\MasterMind\Model\GameStateInterface;
-use Space48\MasterMind\Session\GameState;
+use Space48\MasterMind\Model\State\SessionGameState;
 
 /**
- * @covers \Space48\MasterMind\Session\GameState
+ * @covers \Space48\MasterMind\Model\State\SessionGameState
  * @magentoAppIsolation enabled
  */
-class GameStateTest extends \PHPUnit_Framework_TestCase
+class SessionGameStateTest extends \PHPUnit_Framework_TestCase
 {
     private function createGameState(): GameStateInterface
     {

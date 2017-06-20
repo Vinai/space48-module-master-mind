@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Space48\MasterMind\Test\Integration\Block;
+namespace Space48\MasterMind\Block;
 
 use Magento\TestFramework\ObjectManager;
 use Space48\MasterMind\Block\MasterMindBlock;
@@ -28,8 +28,9 @@ class MasterMindBlockTest extends \PHPUnit_Framework_TestCase
         $colors = json_decode($colorsJson, true);
         $this->assertContains('red', $colors);
         $this->assertContains('green', $colors);
-        $this->assertContains('blue', $colors);
         $this->assertContains('yellow', $colors);
-        $this->assertContains('violet', $colors);
+        $this->assertContains('blue', $colors);
+        $this->assertContains('magenta', $colors);
+        $this->assertContains('cyan', $colors);
     }
 }

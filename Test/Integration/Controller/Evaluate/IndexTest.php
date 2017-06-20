@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Space48\MasterMind\Test\Integration\Controller\Evaluate;
+namespace Space48\MasterMind\Controller\Evaluate;
 
 use Magento\TestFramework\TestCase\AbstractController;
 

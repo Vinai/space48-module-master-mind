@@ -71,7 +71,7 @@ class MasterMindGame implements MasterMindGameInterface
     private function buildResultArray($checkResult): array
     {
         return [
-            self::KEY_CHECK_RESULT => self::RESULT_MESSAGE_MAP[$checkResult],
+            self::KEY_CHECK_RESULT => $checkResult,
             self::KEY_GUESS_COUNT  => $this->gameState->getGuessCount(),
         ];
     }

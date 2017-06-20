@@ -1,17 +1,34 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Space48\MasterMind\Model\GameStateInterface" type="Space48\MasterMind\Session\GameState"/>
+    <preference for="Space48\MasterMind\Model\GameStateInterface" type="Space48\MasterMind\Model\State\InMemoryGameState"/>
     <preference for="Space48\MasterMind\Model\MasterMindGameInterface" type="Space48\MasterMind\Model\MasterMindGame"/>
     <preference for="Space48\MasterMind\Model\GuessCheckerInterface" type="Space48\MasterMind\Model\TwoColorGuessChecker"/>
+    <type name="Space48\MasterMind\Controller\Evaluate\Index">
+        <arguments>
+            <argument name="game" xsi:type="object">Space48\MasterMind\Model\HumanCheckResultGameDecorator</argument>
+        </arguments>
+    </type>
+    <type name="\Space48\MasterMind\Console\MasterMindGameCommand">
+        <arguments>
+            <argument name="game" xsi:type="object">Space48\MasterMind\Model\HumanCheckResultGameDecorator</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="space48_mastermind" xsi:type="object">Space48\MasterMind\Console\MasterMindGameCommand</item>
+            </argument>
+        </arguments>
+    </type>
     <type name="Space48\MasterMind\Config\Colors">
         <arguments>
             <argument name="colors" xsi:type="array">
-                <item name="10" xsi:type="string">red</item>
-                <item name="20" xsi:type="string">green</item>
-                <item name="30" xsi:type="string">blue</item>
+                <item name="20" xsi:type="string">red</item>
+                <item name="30" xsi:type="string">green</item>
                 <item name="40" xsi:type="string">yellow</item>
-                <item name="50" xsi:type="string">orange</item>
-                <item name="60" xsi:type="string">violet</item>
+                <item name="50" xsi:type="string">blue</item>
+                <item name="60" xsi:type="string">magenta</item>
+                <item name="70" xsi:type="string">cyan</item>
             </argument>
         </arguments>
     </type>

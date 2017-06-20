@@ -39,4 +39,12 @@ class Colors implements \JsonSerializable
         $color = $this->colors[array_rand($this->colors)];
         return array_merge($this->pick($numberOfColorsToPick - 1), [$color]);
     }
+
+    /**
+     * @return string[]
+     */
+    public function asArray()
+    {
+        return array_values($this->colors);
+    }
 }

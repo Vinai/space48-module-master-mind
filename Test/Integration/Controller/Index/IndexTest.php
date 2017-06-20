@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Space48\MasterMind\Test\Integration\Controller\Index;
+namespace Space48\MasterMind\Controller\Index;
 
 use Magento\Framework\View\LayoutInterface;
 use Magento\TestFramework\ObjectManager;

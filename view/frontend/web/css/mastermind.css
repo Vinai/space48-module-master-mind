@@ -5,6 +5,7 @@
     width: 5em;
     height: 5em;
     list-style-type: none;
+    border: 1px solid black;
 }
 
 #mastermind .guesses, #mastermind .color-guess {

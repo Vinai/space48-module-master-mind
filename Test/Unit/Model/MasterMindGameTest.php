@@ -2,13 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Space48\MasterMind\Test\Unit\Model;
+namespace Space48\MasterMind\Model;
 
 use Space48\MasterMind\Config\Colors;
-use Space48\MasterMind\Model\GameStateInterface;
-use Space48\MasterMind\Model\GuessCheckerInterface;
-use Space48\MasterMind\Model\MasterMindGame;
-use Space48\MasterMind\Model\MasterMindGameInterface;
 
 /**
  * @covers \Space48\MasterMind\Model\MasterMindGame
@@ -65,22 +61,20 @@ class MasterMindGameTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $checkerResult
-     * @dataProvider checkerResultDataProvider
+     * @param string $checkResult
+     * @dataProvider checkResultDataProvider
      */
-    public function testReturnsMapValueForGuessCheckResult(string $checkerResult)
+    public function testReturnsMapValueForGuessCheckResult(string $checkResult)
     {
         $this->mockColors->method('pick')->willReturn([]);
-        $this->mockChecker->method('check')->willReturn($checkerResult);
+        $this->mockChecker->method('check')->willReturn($checkResult);
         $this->mockGameState->method('getTargetColors')->willReturn(['frob', 'zab']);
         
-        $expected = MasterMindGameInterface::RESULT_MESSAGE_MAP[$checkerResult];
-        
         $result = $this->createGameInstance()->playerGuesses(['foo', 'bar']);
-        $this->assertSame($expected, $result[MasterMindGameInterface::KEY_CHECK_RESULT]);
+        $this->assertSame($checkResult, $result[MasterMindGameInterface::KEY_CHECK_RESULT]);
     }
 
-    public function checkerResultDataProvider()
+    public function checkResultDataProvider()
     {
         return [
             [GuessCheckerInterface::PERFECT],

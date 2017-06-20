@@ -2,10 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Space48\MasterMind\Test\Unit\Model;
-
-use Space48\MasterMind\Model\TwoColorGuessChecker;
-use Space48\MasterMind\Model\GuessCheckerInterface;
+namespace Space48\MasterMind\Model;
 
 /**
  * @covers \Space48\MasterMind\Model\TwoColorGuessChecker
