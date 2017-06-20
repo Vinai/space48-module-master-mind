@@ -17,7 +17,7 @@
 <div id="mastermind" data-bind="scope: 'space48_mastermind'">
     <div><h3 class="step-instruction" data-bind="text: instruction"></h3></div>
     <div>
-        <ul class="color-chooser" data-bind="foreach: colors">
+        <ul class="color-chooser" data-bind="foreach: colors, visible: true" style="display: none;">
             <li class="color" data-bind="
                 style: { backgroundColor: $data },
                 click: $parent.guess
