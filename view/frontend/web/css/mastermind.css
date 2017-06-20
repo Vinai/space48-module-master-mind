@@ -8,6 +8,10 @@
     border: 1px solid black;
 }
 
+#mastermind .color-chooser .color {
+    cursor: pointer;
+}
+
 #mastermind .guesses, #mastermind .color-guess {
     clear: both;
 }
