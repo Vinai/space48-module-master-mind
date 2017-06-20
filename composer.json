@@ -3,7 +3,8 @@
   "description": "Educational example module to practice writing tests in the context of a Magento 2 module.",
   "require": {
     "php": "^7.0.0",
-    "magento/framework": "^100.1.2"
+    "magento/framework": "^100.1.2",
+    "symfony/console": "~2.3 <2.7"
   },
   "type": "magento2-module",
   "license": [
