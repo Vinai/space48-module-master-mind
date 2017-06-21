@@ -24,7 +24,7 @@ class Colors implements \JsonSerializable
 
     public function jsonSerialize()
     {
-        return array_values($this->colors);
+        return $this->asArray();
     }
 
     /**
