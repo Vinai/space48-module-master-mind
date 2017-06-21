@@ -42,8 +42,9 @@ class MasterMindGameCommandTest extends \PHPUnit_Framework_TestCase
     private function createCommandInstance(): MasterMindGameCommand
     {
         $command = new MasterMindGameCommand($this->mockGame, $this->stubColors, $this->mockGameState);
-        $dummyHelper = $this->getMockBuilder(QuestionHelper::class)->disableOriginalConstructor()->getMock();
-        $command->setHelperSet(new HelperSet(['question' => $dummyHelper]));
+        $stubHelper = $this->getMockBuilder(QuestionHelper::class)->disableOriginalConstructor()->getMock();
+        $stubHelper->method('ask')->willReturn('');
+        $command->setHelperSet(new HelperSet(['question' => $stubHelper]));
 
         return $command;
     }

@@ -48,7 +48,7 @@ class MasterMindGameCommand extends Command
         };
     }
 
-    private function readGuess(InputInterface $input, OutputInterface $output)
+    private function readGuess(InputInterface $input, OutputInterface $output): array
     {
         $output->writeln('<option=bold>Your guess:</>');
         $output->writeln('Available colors:');
@@ -68,7 +68,7 @@ class MasterMindGameCommand extends Command
         $output->writeln(' ' . implode('   ', $formattedColors) . "\n");
     }
 
-    private function readColor(InputInterface $input, OutputInterface $output, string $questionText)
+    private function readColor(InputInterface $input, OutputInterface $output, string $questionText): string
     {
         $availableColors = $this->colors->asArray();
         
