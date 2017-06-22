@@ -23,9 +23,9 @@ The purpose of this module is to allow practicing different aspects of testing r
 The repository has 4 tags:
 
 * `0-complete`: The fully functional module. Same as the HEAD of the master branch. Use this as a reference.
-* `1-no-guess-checker`: The complete module missing only the `GuessCheckerInterface` implementation.
-* `2-no-mastermind`: The complete module, except for the `GuessCheckerInterface` and the `MasterMindGameInterface` implementations.
-* `3-no-evaluate-action`: The complete module, except for the `GuessCheckerInterface`, the `MasterMindGameInterface` and the `\Space48\MasterMind\Controller\Evaluate\Index` implementations.
+* `1-no-guess-checker`: The complete module missing only the `Model\GuessCheckerInterface` implementation.
+* `2-no-mastermind`: The complete module, except for the `Model\GuessCheckerInterface` and the `Model\MasterMindGameInterface` implementations.
+* `3-no-evaluate-action`: The complete module, except for the `Model\GuessCheckerInterface`, the `Model\MasterMindGameInterface` and the `\Space48\MasterMind\Controller\Evaluate\Index` implementations.
 
 Depending on the available time, run `git checkout [tag-name]` and implement the missing classes.
 Each of 3 classes that can be implemented allows practicing different aspects related to testing.  
