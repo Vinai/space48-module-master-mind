@@ -12,6 +12,7 @@ use Space48\MasterMind\Model\State\SessionGameState;
 /**
  * @covers \Space48\MasterMind\Model\State\SessionGameState
  * @magentoAppIsolation enabled
+ * @magentoAppArea frontend
  */
 class SessionGameStateTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,7 +26,7 @@ class SessionGameStateTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(SessionManager::class, $this->createGameState());
     }
 
-    public function testStarstWithGuessCountOfZero()
+    public function testStartsWithGuessCountOfZero()
     {
         $this->assertSame(0, $this->createGameState()->getGuessCount());
     }

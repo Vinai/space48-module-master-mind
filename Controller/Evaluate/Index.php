@@ -5,56 +5,72 @@ declare(strict_types=1);
 namespace Space48\MasterMind\Controller\Evaluate;
 
 use Magento\Framework\App\ActionInterface;
-use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Controller\Result\Json;
 use Magento\Framework\Controller\Result\JsonFactory as JsonResultFactory;
-use Space48\MasterMind\Model\MasterMindGameInterface;
+use Space48\MasterMind\Config\HumanReadableCheckResultMessage;
+use Space48\MasterMind\Game\GuessStrategy\HttpRequestGuessStrategy;
+use Space48\MasterMind\Game\GameRunner;
 
 class Index implements ActionInterface
 {
-    private $defaultGuess = ['', ''];
-
     /**
      * @var JsonResultFactory
      */
     private $jsonResultFactory;
+    
+    /**
+     * @var HttpRequestGuessStrategy
+     */
+    private $guessStrategy;
 
     /**
-     * @var MasterMindGameInterface
+     * @var HumanReadableCheckResultMessage
      */
-    private $game;
+    private $humanReadableCheckResultMessage;
 
     /**
-     * @var RequestInterface
+     * @var GameRunner
      */
-    private $request;
+    private $gameRunner;
 
     public function __construct(
         JsonResultFactory $jsonResultFactory,
-        RequestInterface $request,
-        MasterMindGameInterface $game
+        GameRunner $gameRunner,
+        HttpRequestGuessStrategy $guessStrategy,
+        HumanReadableCheckResultMessage $humanReadableCheckResultMessage
     ) {
         $this->jsonResultFactory = $jsonResultFactory;
-        $this->request = $request;
-        $this->game = $game;
+        $this->gameRunner = $gameRunner;
+        $this->guessStrategy = $guessStrategy;
+        $this->humanReadableCheckResultMessage = $humanReadableCheckResultMessage;
     }
 
     public function execute()
     {
+        $guessResult = $this->gameRunner->playRound($this->guessStrategy);
+        $responseMessage = $this->buildResponseMessage($guessResult);
+
+        return $this->createJsonResponse($responseMessage);
+    }
+
+    private function buildResponseMessage(array $guessResult): string
+    {
+        $message = $this->getResultMessage($guessResult[GameRunner::KEY_RESULT]);
+        $guesses = '(#' . $guessResult[GameRunner::KEY_GUESS_COUNT] . ')';
+        
+        return $message . ' ' . $guesses;
+    }
+
+    private function getResultMessage($resultCode): string
+    {
+        return $this->humanReadableCheckResultMessage->get($resultCode);
+    }
+
+    private function createJsonResponse($responseMessage): Json
+    {
         $jsonResult = $this->jsonResultFactory->create();
-        $colors = $this->request->getParam('guess', $this->defaultGuess);
-        $responseMessage = $this->buildResponseMessage($colors);
         $jsonResult->setData($responseMessage);
 
         return $jsonResult;
-    }
-
-    private function buildResponseMessage($colors): string
-    {
-        $guessResult = $this->game->playerGuesses($colors);
-        
-        $message = $guessResult[MasterMindGameInterface::KEY_CHECK_RESULT];
-        $guesses = '(#' . $guessResult[MasterMindGameInterface::KEY_GUESS_COUNT] . ')';
-        
-        return $message . ' ' . $guesses;
     }
 }
